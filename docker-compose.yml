@@ -1,48 +1,48 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: estudo-laravel
-    restart: unless-stopped
-    working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
-    ports:
-      - "8000:8000"
-    depends_on:
-      mysql:
-        condition: service_healthy
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: estudo-laravel
+        restart: unless-stopped
+        working_dir: /var/www/html
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8000:8000"
+        depends_on:
+            mysql:
+                condition: service_healthy
 
-  mysql:
-    image: mysql:8.0
-    container_name: estudo-mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: laravel
-    ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+    mysql:
+        image: mysql:8.0
+        container_name: estudo-mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: root123
+            MYSQL_DATABASE: users
+        ports:
+            - "3307:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
 
-  phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: estudo-phpmyadmin
-    restart: unless-stopped
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    ports:
-      - "8081:80"
-    depends_on:
-      mysql:
-        condition: service_healthy
+    phpmyadmin:
+        image: phpmyadmin:latest
+        container_name: estudo-phpmyadmin
+        restart: unless-stopped
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - "8081:80"
+        depends_on:
+            mysql:
+                condition: service_healthy
 
 volumes:
-  mysql_data:
+    mysql_data:

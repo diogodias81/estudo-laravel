@@ -7,10 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 class UserController extends Controller
 {
-    //  
+    //
     public function index(){
 
-        $users = User::paginate(15);//all(); 
+        $users = User::paginate(15); //all();
         return view('admin.users.index',compact('users'));
     }
    public function create(){
