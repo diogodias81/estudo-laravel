@@ -1,30 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+@extends('admin.users.layouts.app')
+@section('title','Usuarios')
+@section('content')
     <h1>Usuarios</h1>
-     <a href="{{route('users.create')}}">Novo</a>
+
+    @if(session()->has('sucess'))
+        {{session('sucess')}}
+
+    @endif
+    <br>
+    <a href="{{route('users.create')}}">Novo</a>
     <table>
         <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Acões</th>
+        </tr>
+        <tbody>
+        @foreach ($users as $user)
             <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Acões</th>
+                <td>{{$user->name}}</td>
+                <td>{{$user->email}}</td>
+                <td><a href="{{ route('users.edit',$user)}}">Edit</a>
+                </td>
             </tr>
-            <tbody> 
-                @foreach ($users as $user)
-                    <tr>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->email}}</td>
-                    </tr>
-                @endforeach
-            </tbody>
+        @endforeach
+        </tbody>
         </thead>
     </table>
     {{$users->Links()}}
-</body>
-</html>
+
+@endsection
